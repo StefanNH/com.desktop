@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mp.com.desktop.PrimaryController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <VBox prefHeight="374.0" prefWidth="226.0">
+         <children>
+            <Separator prefWidth="200.0" />
+            <HBox prefHeight="26.0" prefWidth="212.0">
+               <children>
+                  <Button fx:id="btnLock" mnemonicParsing="false" onAction="#lockUnlockTextArea" text="Lock/Unlock" />
+                  <Button mnemonicParsing="false" text="Import" />
+                  <Button mnemonicParsing="false" text="Export" />
+                  <Button fx:id="btnAdd" layoutX="114.0" layoutY="10.0" mnemonicParsing="false" onAction="#addVertex" text="Add" />
+               </children>
+            </HBox>
+            <Separator prefHeight="0.0" prefWidth="208.0" />
+            <Label text="Enter Title">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextField />
+            <Separator prefWidth="200.0" />
+            <Label text="Enter text">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="txtArea" prefHeight="523.0" prefWidth="266.0">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </TextArea>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+ 
+   </center>
+   <center>
+      <BorderPane fx:id="borderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
