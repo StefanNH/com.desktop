@@ -4,15 +4,18 @@ import java.io.IOException;
 
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import mp.com.desktop.mpgraph.GraphMP;
 import mp.com.desktop.mpgraph.Vertex;
 import mp.com.desktop.mpgraph.VertexSquare;
 
 public class PrimaryController {
-	Vertex vertex1;
 	@FXML
 	Button btnLock;
 	@FXML

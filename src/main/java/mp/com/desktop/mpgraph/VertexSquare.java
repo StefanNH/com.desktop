@@ -7,8 +7,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class VertexSquare extends Vertex {
@@ -18,6 +22,7 @@ public class VertexSquare extends Vertex {
 	private Label lb = new Label();
 	private GraphMP graph;
 	private ContextMenu contextMenu = new ContextMenu();
+	private Circle circle = new Circle();
 	// create menuitems
 	private MenuItem menuItem1 = new MenuItem("Vertex item 1");
 	private MenuItem menuItem2 = new MenuItem("Vertex item 2");
@@ -27,8 +32,10 @@ public class VertexSquare extends Vertex {
 	public VertexSquare(GraphMP g, String strContent) {
 		super();
 		graph = g;
+		
 		lb.setText(strContent);
 		lb.setLayoutX(square.getLayoutX() + 22);
+		
 		square.setStroke(Color.GRAY);
 		square.setFill(Color.GRAY);
 		square.setArcHeight(3);
@@ -36,6 +43,29 @@ public class VertexSquare extends Vertex {
 		square.setOnMousePressed(onMousePressedEventHandler);
 		square.setOnMouseDragged(onMouseDraggedEventHandler);
 		square.setOnMouseReleased(onMouseReleasedEventHandler);
+		square.setOnDragOver(e->{
+			if(e.getDragboard().hasString()) {
+				e.acceptTransferModes(TransferMode.ANY);
+			}
+		});
+		square.setOnDragDropped(e->{
+			String str = e.getDragboard().getString();
+			System.out.println(this.getVertexId());
+			System.out.println(str);
+			graph.addEdges(graph.getVertexById(str), getCurrent());
+		});
+		
+		circle.setFill(Color.DARKRED);
+        circle.setCenterX(10);
+        circle.setRadius(3);
+        circle.setOnDragDetected(e->{
+        	Dragboard db = circle.startDragAndDrop(TransferMode.ANY);
+        	ClipboardContent content = new ClipboardContent();
+            content.putString(this.getVertexId());
+            System.out.println(this.getVertexId());
+            db.setContent(content);
+            e.consume();
+        });
 
 		menuItem1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -68,6 +98,7 @@ public class VertexSquare extends Vertex {
 
 		getChildren().add(lb);
 		getChildren().add(square);
+		getChildren().add(circle);
 	}
 
 	EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
@@ -117,8 +148,12 @@ public class VertexSquare extends Vertex {
 
 		}
 	};
-
+	protected Vertex getCurrent() {
+		return this;
+	}
+	
 	private void removeThisNode() {
 		graph.removeVertex(this);
 	}
+
 }
