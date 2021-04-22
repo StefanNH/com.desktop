@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -44,8 +43,8 @@
             <HBox prefHeight="26.0" prefWidth="212.0">
                <children>
                   <Button fx:id="btnLock" mnemonicParsing="false" onAction="#lockUnlockTextArea" text="Lock/Unlock" />
-                  <Button mnemonicParsing="false" text="Import" />
-                  <Button mnemonicParsing="false" text="Export" />
+                  <Button fx:id="btnImport" mnemonicParsing="false" onAction="#openTxtFile" text="Import" />
+                  <Button fx:id="btnExport" mnemonicParsing="false" onAction="#saveTxtFile" text="Export" />
                   <Button fx:id="btnAdd" layoutX="114.0" layoutY="10.0" mnemonicParsing="false" onAction="#addVertex" text="Add" />
                </children>
             </HBox>

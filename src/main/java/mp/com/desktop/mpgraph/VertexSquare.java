@@ -24,9 +24,9 @@ public class VertexSquare extends Vertex {
 	private ContextMenu contextMenu = new ContextMenu();
 	private Circle circle = new Circle();
 	// create menuitems
-	private MenuItem menuItem1 = new MenuItem("Vertex item 1");
-	private MenuItem menuItem2 = new MenuItem("Vertex item 2");
-	private MenuItem menuItem3 = new MenuItem("Vertex item 3");
+	private MenuItem menuItem1 = new MenuItem("Change content");
+	private MenuItem menuItem2 = new MenuItem("Delete vertex");
+	private MenuItem menuItem3 = new MenuItem("Close");
 	private Rectangle square = new Rectangle(20, 20);
 
 	public VertexSquare(GraphMP g, String strContent) {
@@ -73,6 +73,8 @@ public class VertexSquare extends Vertex {
 			@Override
 			public void handle(ActionEvent e) {
 				TextInputDialog db = new TextInputDialog();
+				db.setTitle("Edit contet");
+				db.setHeaderText("Do you want to edit the content");
 				db.getEditor().setText(lb.getText());
 				db.showAndWait();
 				lb.setText(db.getEditor().getText());
