@@ -52,14 +52,14 @@
             <Separator prefHeight="0.0" prefWidth="208.0" />
             <Label text="Enter Title">
                <font>
-                  <Font name="System Bold Italic" size="15.0" />
+                  <Font name="System Bold Italic" size="13.0" />
                </font>
             </Label>
             <TextField />
             <Separator prefWidth="200.0" />
             <Label text="Enter text">
                <font>
-                  <Font name="System Bold Italic" size="15.0" />
+                  <Font name="System Bold Italic" size="13.0" />
                </font>
             </Label>
             <TextArea fx:id="txtArea" onDragDropped="#handleDropTxtFiles" onDragOver="#handleDragOver" prefHeight="523.0" prefWidth="266.0">
@@ -77,7 +77,6 @@
    <center>
       <BorderPane fx:id="borderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
-            <AnchorPane fx:id="graphP" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center></BorderPane>
    </center>
 </BorderPane>
