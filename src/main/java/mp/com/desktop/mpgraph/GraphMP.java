@@ -10,28 +10,28 @@ import javafx.scene.layout.Pane;
 public class GraphMP {
 
 	private ArrayList<Vertex> vertices = new ArrayList();
-	private HashMap<String,Vertex> vertexMap = new HashMap<String, Vertex>();
+	private HashMap<String, Vertex> vertexMap = new HashMap<String, Vertex>();
+	private ArrayList<Edge> edges = new ArrayList<>();
 
 	private Group canvas;
 
 	private ZoomScrollPane scrollPane;
 
-
 	private Pane cellLayer;
 
 	public GraphMP() {
 
+		canvas = new Group();
+		cellLayer = new Pane();
 
-        canvas = new Group();
-        cellLayer = new Pane();
+		canvas.getChildren().add(cellLayer);
+		scrollPane = new ZoomScrollPane(canvas);
 
-        canvas.getChildren().add(cellLayer);
-        scrollPane = new ZoomScrollPane(canvas);
-       
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
+		scrollPane.pannableProperty().set(true);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setFitToHeight(true);
 
-    }
+	}
 
 	public ScrollPane getScrollPane() {
 		return this.scrollPane;
@@ -44,23 +44,26 @@ public class GraphMP {
 	public double getScale() {
 		return this.scrollPane.getScaleValue();
 	}
-	
+
 	public Vertex getVertexById(String id) {
 		return vertexMap.get(id);
 	}
-	
+
 	public void addVertex(Vertex v) {
 		this.cellLayer.getChildren().add(v);
 		this.vertices.add(v);
 		this.vertexMap.put(v.getVertexId(), v);
 	}
+
 	public void removeVertex(Vertex v) {
 		this.cellLayer.getChildren().remove(v);
 		this.vertices.remove(v);
 		this.vertexMap.remove(v.getVertexId());
 	}
-	
+
 	public void addEdges(Vertex v1, Vertex v2) {
-		this.cellLayer.getChildren().add(new Edge(v1,v2));
+			Edge newEdge = new Edge(v1, v2);
+			this.cellLayer.getChildren().add(newEdge);
+			this.edges.add(newEdge);
 	}
 }

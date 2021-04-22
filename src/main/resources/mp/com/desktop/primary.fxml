@@ -62,7 +62,7 @@
                   <Font name="System Bold Italic" size="15.0" />
                </font>
             </Label>
-            <TextArea fx:id="txtArea" prefHeight="523.0" prefWidth="266.0">
+            <TextArea fx:id="txtArea" onDragDropped="#handleDropTxtFiles" onDragOver="#handleDragOver" prefHeight="523.0" prefWidth="266.0">
                <padding>
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </padding>

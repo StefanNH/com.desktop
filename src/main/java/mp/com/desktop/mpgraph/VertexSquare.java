@@ -46,6 +46,7 @@ public class VertexSquare extends Vertex {
 		square.setOnDragOver(e->{
 			if(e.getDragboard().hasString()) {
 				e.acceptTransferModes(TransferMode.ANY);
+				e.consume();
 			}
 		});
 		square.setOnDragDropped(e->{
@@ -53,6 +54,7 @@ public class VertexSquare extends Vertex {
 			System.out.println(this.getVertexId());
 			System.out.println(str);
 			graph.addEdges(graph.getVertexById(str), getCurrent());
+			e.consume();
 		});
 		
 		circle.setFill(Color.DARKRED);
@@ -122,7 +124,7 @@ public class VertexSquare extends Vertex {
 
 		@Override
 		public void handle(MouseEvent event) {
-
+			event.consume();
 			Node node;
 			Node srs = (Node) event.getSource();
 			if (srs instanceof Rectangle) {
@@ -148,6 +150,10 @@ public class VertexSquare extends Vertex {
 
 		}
 	};
+	public Rectangle getSquare() {
+		return this.square;
+	}
+	
 	protected Vertex getCurrent() {
 		return this;
 	}
