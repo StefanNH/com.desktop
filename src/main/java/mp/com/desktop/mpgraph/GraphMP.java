@@ -2,6 +2,7 @@ package mp.com.desktop.mpgraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
@@ -14,6 +15,7 @@ public class GraphMP {
 	private ArrayList<Vertex> vertices = new ArrayList();
 	private HashMap<String, Vertex> vertexMap = new HashMap<String, Vertex>();
 	private ArrayList<Edge> edges = new ArrayList<>();
+	private ArrayList<Vertex> removedVertices = new ArrayList();
 	ContextMenu contextMenu = new ContextMenu();
 
 	// create menuitems
@@ -52,6 +54,7 @@ public class GraphMP {
 		menuItem2.setOnAction(e -> {
 			addVertex(new VertexSchema(this, ""));
 		});
+
 		scrollPane.pannableProperty().set(true);
 		scrollPane.setFitToWidth(true);
 		scrollPane.setFitToHeight(true);
@@ -70,7 +73,15 @@ public class GraphMP {
 		return this.scrollPane.getScaleValue();
 	}
 
-	public void removeEdge(Edge e) {
+	public void removeEdge(Vertex v) {
+		// enhanced for loop triggers concurrency exception/ normal wasn't checked
+		for (Iterator<Edge> iterator = this.edges.iterator(); iterator.hasNext();) {
+			Edge value = iterator.next();
+			if (value.getSource().equals(v) || value.getTarget().equals(v)) {
+				iterator.remove();
+				this.cellLayer.getChildren().remove(value);
+			}
+		}
 	}
 
 	public Vertex getVertexById(String id) {
@@ -87,7 +98,7 @@ public class GraphMP {
 		this.cellLayer.getChildren().remove(v);
 		this.vertices.remove(v);
 		this.vertexMap.remove(v.getVertexId());
-
+		this.removedVertices.add(v);
 	}
 
 	public void addEdges(Vertex v1, Vertex v2) {

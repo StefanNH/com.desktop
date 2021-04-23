@@ -162,8 +162,8 @@ public class VertexSquare extends Vertex {
 	}
 
 	private void removeThisNode() {
+		graph.removeEdge(getCurrent());
 		graph.removeVertex(getCurrent());
-		//graph.cleanEdges(getCurrent());
 	}
 
 }
