@@ -2,6 +2,7 @@ package mp.com.desktop.mpgraph;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 
 public class EdgeTest extends Group {
@@ -17,9 +18,14 @@ public class EdgeTest extends Group {
 	private SimpleDoubleProperty y2 = new SimpleDoubleProperty();
 
 	private Polyline line = new Polyline();
-	private Polyline line1 = new Polyline();
+	private Polyline arrowhead = new Polyline();
 
 	public EdgeTest(Vertex source, Vertex target) {
+
+		line.setFill(Color.DIMGREY);
+		line.setStroke(Color.DIMGREY);
+		arrowhead.setFill(Color.DIMGREY);
+		arrowhead.setStroke(Color.DIMGREY);
 		if (source instanceof VertexSquare) {
 			if (target instanceof VertexSquare) {
 				this.source = source;
@@ -28,7 +34,7 @@ public class EdgeTest extends Group {
 				this.y1.set(((VertexSquare) source).getSquare().getLayoutY());
 				this.x2.set(((VertexSquare) target).getSquare().getLayoutX());
 				this.y2.set(((VertexSquare) target).getSquare().getLayoutY());
-				getChildren().addAll(line, line1);
+				getChildren().addAll(line, arrowhead);
 
 			}
 		}
@@ -46,10 +52,11 @@ public class EdgeTest extends Group {
 		double angle = Math.atan2(start[1] - end[1], start[0] - end[0]);
 		double x = end[0] - Math.cos(angle - ARROW_ANGLE) * ARROW_LENGTH;
 		double y = end[1] - Math.sin(angle - ARROW_ANGLE) * ARROW_LENGTH;
-		line1.getPoints().setAll(x, y, end[0], end[1]);
-		x = end[0] - Math.cos(angle + ARROW_ANGLE) * ARROW_LENGTH;
-		y = end[1] - Math.sin(angle + ARROW_ANGLE) * ARROW_LENGTH;
-		line1.getPoints().addAll(x, y);
+		arrowhead.getPoints().setAll(x, y, end[0], end[1]);
+		double x1 = end[0] - Math.cos(angle + ARROW_ANGLE) * ARROW_LENGTH;
+		double y1 = end[1] - Math.sin(angle + ARROW_ANGLE) * ARROW_LENGTH;
+		// adding forth point x,y will result in triangle arrowhead
+		arrowhead.getPoints().addAll(x1, y1, x, y);
 	}
 
 	private double[] offset(double x1, double y1, double x2, double y2) {

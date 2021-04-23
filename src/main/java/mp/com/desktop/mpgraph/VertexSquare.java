@@ -32,10 +32,10 @@ public class VertexSquare extends Vertex {
 	public VertexSquare(GraphMP g, String strContent) {
 		super();
 		graph = g;
-		
+
 		lb.setText(strContent);
 		lb.setLayoutX(square.getLayoutX() + 22);
-		
+
 		square.setStroke(Color.GRAY);
 		square.setFill(Color.GRAY);
 		square.setArcHeight(3);
@@ -43,38 +43,38 @@ public class VertexSquare extends Vertex {
 		square.setOnMousePressed(onMousePressedEventHandler);
 		square.setOnMouseDragged(onMouseDraggedEventHandler);
 		square.setOnMouseReleased(onMouseReleasedEventHandler);
-		square.setOnDragOver(e->{
-			if(e.getDragboard().hasString()) {
+		square.setOnDragOver(e -> {
+			if (e.getDragboard().hasString()) {
 				e.acceptTransferModes(TransferMode.ANY);
 				e.consume();
 			}
 		});
-		square.setOnDragDropped(e->{
+		square.setOnDragDropped(e -> {
 			String str = e.getDragboard().getString();
 			System.out.println(this.getVertexId());
 			System.out.println(str);
 			graph.addEdges(graph.getVertexById(str), getCurrent());
 			e.consume();
 		});
-		
+
 		circle.setFill(Color.DARKRED);
-        circle.setCenterX(10);
-        circle.setRadius(3);
-        circle.setOnDragDetected(e->{
-        	Dragboard db = circle.startDragAndDrop(TransferMode.ANY);
-        	ClipboardContent content = new ClipboardContent();
-            content.putString(this.getVertexId());
-            System.out.println(this.getVertexId());
-            db.setContent(content);
-            e.consume();
-        });
+		circle.setCenterX(10);
+		circle.setRadius(3);
+		circle.setOnDragDetected(e -> {
+			Dragboard db = circle.startDragAndDrop(TransferMode.ANY);
+			ClipboardContent content = new ClipboardContent();
+			content.putString(this.getVertexId());
+			System.out.println(this.getVertexId());
+			db.setContent(content);
+			e.consume();
+		});
 
 		menuItem1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				TextInputDialog db = new TextInputDialog();
-				db.setTitle("Edit contet");
-				db.setHeaderText("Do you want to edit the content");
+				db.setTitle("Edit content");
+				db.setHeaderText("Do you want to edit the content of Node ID: " + getVertexId());
 				db.getEditor().setText(lb.getText());
 				db.showAndWait();
 				lb.setText(db.getEditor().getText());
@@ -152,14 +152,15 @@ public class VertexSquare extends Vertex {
 
 		}
 	};
+
 	public Rectangle getSquare() {
 		return this.square;
 	}
-	
+
 	protected Vertex getCurrent() {
 		return this;
 	}
-	
+
 	private void removeThisNode() {
 		graph.removeVertex(this);
 	}
