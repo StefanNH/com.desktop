@@ -14,15 +14,15 @@ public class Edge extends Group {
 		this.source = source;
 		this.target = target;
 
-			line = new Line();
+		line = new Line();
 
-			line.startXProperty().bind(source.layoutXProperty().add(((VertexSquare) source).getSquare().getWidth() / 2.0));
-			line.startYProperty().bind(source.layoutYProperty().add(((VertexSquare) source).getSquare().getHeight() / 2.0));
+		line.startXProperty().bind(source.layoutXProperty().add(((VertexSquare) source).getSquare().getWidth() / 2.0));
+		line.startYProperty().bind(source.layoutYProperty().add(((VertexSquare) source).getSquare().getHeight() / 2.0));
 
-			line.endXProperty().bind(target.layoutXProperty().add(((VertexSquare) target).getSquare().getWidth() / 2.0));
-			line.endYProperty().bind(target.layoutYProperty().add(((VertexSquare) target).getSquare().getHeight() / 2.0));
+		line.endXProperty().bind(target.layoutXProperty().add(((VertexSquare) target).getSquare().getWidth() / 2.0));
+		line.endYProperty().bind(target.layoutYProperty().add(((VertexSquare) target).getSquare().getHeight() / 2.0));
 
-			getChildren().add(line);
+		getChildren().add(line);
 
 	}
 

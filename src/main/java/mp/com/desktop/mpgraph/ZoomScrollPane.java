@@ -1,6 +1,5 @@
 package mp.com.desktop.mpgraph;
 
-
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -19,32 +18,32 @@ public class ZoomScrollPane extends ScrollPane {
 	ContextMenu contextMenu = new ContextMenu();
 
 	// create menuitems
-	MenuItem menuItem1 = new MenuItem("menu item 1");
+	MenuItem menuItem1 = new MenuItem("Add vertex");
 	MenuItem menuItem2 = new MenuItem("menu item 2");
 	MenuItem menuItem3 = new MenuItem("menu item 3");
 
 	public ZoomScrollPane(Node content) {
-        this.content = content;
-        Group contentGroup = new Group();
-        zoomGroup = new Group();
-        contentGroup.getChildren().add(zoomGroup);
-        zoomGroup.getChildren().add(content);
-        setContent(contentGroup);
-        scaleTransform = new Scale(scaleValue, scaleValue, 0, 0);
-        zoomGroup.getTransforms().add(scaleTransform);
-        // add menu items to menu
-        contextMenu.getItems().add(menuItem1);
-        contextMenu.getItems().add(menuItem2);
-        contextMenu.getItems().add(menuItem3);
-        zoomGroup.setOnScroll(new ZoomHandler());
-        setOnMousePressed(eh -> {
-            if (eh.isSecondaryButtonDown() && !contextMenu.isShowing()) {
-                contextMenu.show(this, eh.getScreenX(), eh.getScreenY());
-            } else if (contextMenu.isShowing()) {
-                contextMenu.hide();
-            }
-        });
-    }
+		this.content = content;
+		Group contentGroup = new Group();
+		zoomGroup = new Group();
+		contentGroup.getChildren().add(zoomGroup);
+		zoomGroup.getChildren().add(content);
+		setContent(contentGroup);
+		scaleTransform = new Scale(scaleValue, scaleValue, 0, 0);
+		zoomGroup.getTransforms().add(scaleTransform);
+		// add menu items to menu
+		contextMenu.getItems().add(menuItem1);
+		contextMenu.getItems().add(menuItem2);
+		contextMenu.getItems().add(menuItem3);
+		zoomGroup.setOnScroll(new ZoomHandler());
+		setOnMousePressed(eh -> {
+			if (eh.isSecondaryButtonDown() && !contextMenu.isShowing()) {
+				contextMenu.show(this, eh.getScreenX(), eh.getScreenY());
+			} else if (contextMenu.isShowing()) {
+				contextMenu.hide();
+			}
+		});
+	}
 
 	public double getScaleValue() {
 		return scaleValue;
@@ -129,7 +128,6 @@ public class ZoomScrollPane extends ScrollPane {
 
 		@Override
 		public void handle(ScrollEvent scrollEvent) {
-			// if (scrollEvent.isControlDown())
 			{
 
 				if (scrollEvent.getDeltaY() < 0) {

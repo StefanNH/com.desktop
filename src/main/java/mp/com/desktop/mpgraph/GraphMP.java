@@ -11,7 +11,7 @@ public class GraphMP {
 
 	private ArrayList<Vertex> vertices = new ArrayList();
 	private HashMap<String, Vertex> vertexMap = new HashMap<String, Vertex>();
-	private ArrayList<Edge> edges = new ArrayList<>();
+	private ArrayList<EdgeTest> edges = new ArrayList<>();
 
 	private Group canvas;
 
@@ -62,8 +62,26 @@ public class GraphMP {
 	}
 
 	public void addEdges(Vertex v1, Vertex v2) {
-			Edge newEdge = new Edge(v1, v2);
-			this.cellLayer.getChildren().add(newEdge);
-			this.edges.add(newEdge);
+		EdgeTest newEdge = new EdgeTest(v1, v2);
+		VertexSquare nvs = new VertexSquare(this, "Schema");
+		addVertex(nvs);
+		nvs.relocate(((v1.getBoundsInParent().getCenterX() + v2.getBoundsInParent().getCenterX()) / 2) - 6,
+				((v1.getBoundsInParent().getCenterY() + v2.getBoundsInParent().getCenterY()) / 2) - 6);
+		newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSquare) v1).getSquare().getWidth() / 2.0));
+		newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSquare) v1).getSquare().getHeight() / 2.0));
+//			newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
+//			newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+		newEdge.getX2().bind(nvs.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
+		newEdge.getY2().bind(nvs.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+
+		EdgeTest newEdge1 = new EdgeTest(nvs, v2);
+		newEdge1.getX1().bind(nvs.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
+		newEdge1.getY1().bind(nvs.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+		newEdge1.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
+		newEdge1.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+		this.cellLayer.getChildren().add(newEdge1);
+		this.edges.add(newEdge1);
+		this.cellLayer.getChildren().add(newEdge);
+		this.edges.add(newEdge);
 	}
 }
