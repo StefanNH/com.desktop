@@ -5,6 +5,9 @@ import javafx.scene.Group;
 import javafx.scene.shape.Polyline;
 
 public class EdgeTest extends Group {
+	private final double OFFSET_SCALE = 15;
+	private final double ARROW_ANGLE = 10;
+	private final double ARROW_LENGTH = 4;
 	protected Vertex source;
 	protected Vertex target;
 
@@ -14,6 +17,7 @@ public class EdgeTest extends Group {
 	private SimpleDoubleProperty y2 = new SimpleDoubleProperty();
 
 	private Polyline line = new Polyline();
+	private Polyline line1 = new Polyline();
 
 	public EdgeTest(Vertex source, Vertex target) {
 		if (source instanceof VertexSquare) {
@@ -24,8 +28,7 @@ public class EdgeTest extends Group {
 				this.y1.set(((VertexSquare) source).getSquare().getLayoutY());
 				this.x2.set(((VertexSquare) target).getSquare().getLayoutX());
 				this.y2.set(((VertexSquare) target).getSquare().getLayoutY());
-				getChildren().add(line);
-
+				getChildren().addAll(line, line1);
 
 			}
 		}
@@ -35,7 +38,23 @@ public class EdgeTest extends Group {
 	}
 
 	private void updateCoordinates() {
-		line.getPoints().setAll(x1.get(), y1.get(), x2.get(), y2.get());
+		double[] start = offset(this.x1.get(), this.y1.get(), this.x2.get(), this.y2.get());
+		double[] end = offset(this.x2.get(), this.y2.get(), this.x1.get(), this.y1.get());
+
+		line.getPoints().setAll(start[0], start[1], end[0], end[1]);
+
+		double angle = Math.atan2(start[1] - end[1], start[0] - end[0]);
+		double x = end[0] - Math.cos(angle - ARROW_ANGLE) * ARROW_LENGTH;
+		double y = end[1] - Math.sin(angle - ARROW_ANGLE) * ARROW_LENGTH;
+		line1.getPoints().setAll(x, y, end[0], end[1]);
+		x = end[0] - Math.cos(angle + ARROW_ANGLE) * ARROW_LENGTH;
+		y = end[1] - Math.sin(angle + ARROW_ANGLE) * ARROW_LENGTH;
+		line1.getPoints().addAll(x, y);
+	}
+
+	private double[] offset(double x1, double y1, double x2, double y2) {
+		double angle = Math.atan2(y2 - y1, x2 - x1);
+		return new double[] { x1 + Math.cos(angle) * OFFSET_SCALE, y1 + Math.sin(angle) * OFFSET_SCALE };
 	}
 
 	public Vertex getSource() {
