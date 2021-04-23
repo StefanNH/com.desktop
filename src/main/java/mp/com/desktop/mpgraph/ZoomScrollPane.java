@@ -15,12 +15,6 @@ public class ZoomScrollPane extends ScrollPane {
 	Node content;
 	double scaleValue = 1.0;
 	double delta = 0.1;
-	ContextMenu contextMenu = new ContextMenu();
-
-	// create menuitems
-	MenuItem menuItem1 = new MenuItem("Add vertex");
-	MenuItem menuItem2 = new MenuItem("menu item 2");
-	MenuItem menuItem3 = new MenuItem("menu item 3");
 
 	public ZoomScrollPane(Node content) {
 		this.content = content;
@@ -31,18 +25,8 @@ public class ZoomScrollPane extends ScrollPane {
 		setContent(contentGroup);
 		scaleTransform = new Scale(scaleValue, scaleValue, 0, 0);
 		zoomGroup.getTransforms().add(scaleTransform);
-		// add menu items to menu
-		contextMenu.getItems().add(menuItem1);
-		contextMenu.getItems().add(menuItem2);
-		contextMenu.getItems().add(menuItem3);
 		zoomGroup.setOnScroll(new ZoomHandler());
-		setOnMousePressed(eh -> {
-			if (eh.isSecondaryButtonDown() && !contextMenu.isShowing()) {
-				contextMenu.show(this, eh.getScreenX(), eh.getScreenY());
-			} else if (contextMenu.isShowing()) {
-				contextMenu.hide();
-			}
-		});
+
 	}
 
 	public double getScaleValue() {

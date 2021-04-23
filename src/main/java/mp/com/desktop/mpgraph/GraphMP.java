@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.scene.Group;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 
@@ -11,7 +13,13 @@ public class GraphMP {
 
 	private ArrayList<Vertex> vertices = new ArrayList();
 	private HashMap<String, Vertex> vertexMap = new HashMap<String, Vertex>();
-	private ArrayList<EdgeTest> edges = new ArrayList<>();
+	private ArrayList<Edge> edges = new ArrayList<>();
+	ContextMenu contextMenu = new ContextMenu();
+
+	// create menuitems
+	MenuItem menuItem1 = new MenuItem("Add vertex");
+	MenuItem menuItem2 = new MenuItem("Add schema");
+	MenuItem menuItem3 = new MenuItem("close");
 
 	private Group canvas;
 
@@ -26,7 +34,24 @@ public class GraphMP {
 
 		canvas.getChildren().add(cellLayer);
 		scrollPane = new ZoomScrollPane(canvas);
+		// add menu items to menu
+		contextMenu.getItems().add(menuItem1);
+		contextMenu.getItems().add(menuItem2);
+		contextMenu.getItems().add(menuItem3);
+		scrollPane.setOnMousePressed(eh -> {
+			if (eh.isSecondaryButtonDown() && !contextMenu.isShowing()) {
+				contextMenu.show(canvas, eh.getScreenX(), eh.getScreenY());
+			} else if (contextMenu.isShowing()) {
+				contextMenu.hide();
+			}
+		});
 
+		menuItem1.setOnAction(e -> {
+			addVertex(new VertexSquare(this, ""));
+		});
+		menuItem2.setOnAction(e -> {
+			addVertex(new VertexSchema(this, ""));
+		});
 		scrollPane.pannableProperty().set(true);
 		scrollPane.setFitToWidth(true);
 		scrollPane.setFitToHeight(true);
@@ -45,6 +70,9 @@ public class GraphMP {
 		return this.scrollPane.getScaleValue();
 	}
 
+	public void removeEdge(Edge e) {
+	}
+
 	public Vertex getVertexById(String id) {
 		return vertexMap.get(id);
 	}
@@ -59,29 +87,69 @@ public class GraphMP {
 		this.cellLayer.getChildren().remove(v);
 		this.vertices.remove(v);
 		this.vertexMap.remove(v.getVertexId());
+
 	}
 
 	public void addEdges(Vertex v1, Vertex v2) {
-		EdgeTest newEdge = new EdgeTest(v1, v2);
-		VertexSquare nvs = new VertexSquare(this, "Schema");
-		addVertex(nvs);
-		nvs.relocate(((v1.getBoundsInParent().getCenterX() + v2.getBoundsInParent().getCenterX()) / 2) - 6,
-				((v1.getBoundsInParent().getCenterY() + v2.getBoundsInParent().getCenterY()) / 2) - 6);
-		newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSquare) v1).getSquare().getWidth() / 2.0));
-		newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSquare) v1).getSquare().getHeight() / 2.0));
-//			newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
-//			newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
-		newEdge.getX2().bind(nvs.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
-		newEdge.getY2().bind(nvs.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+		if (v1 instanceof VertexSquare) {
+			if (v2 instanceof VertexSquare) {
+				VertexSchema nvs = new VertexSchema(this, "Schema");
+				Edge newEdge = new Edge(v1, nvs);
+				addVertex(nvs);
+				nvs.relocate(((v1.getBoundsInParent().getCenterX() + v2.getBoundsInParent().getCenterX()) / 2) - 6,
+						((v1.getBoundsInParent().getCenterY() + v2.getBoundsInParent().getCenterY()) / 2) - 6);
+				newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSquare) v1).getSquare().getWidth() / 2.0));
+				newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSquare) v1).getSquare().getHeight() / 2.0));
 
-		EdgeTest newEdge1 = new EdgeTest(nvs, v2);
-		newEdge1.getX1().bind(nvs.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
-		newEdge1.getY1().bind(nvs.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
-		newEdge1.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
-		newEdge1.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
-		this.cellLayer.getChildren().add(newEdge1);
-		this.edges.add(newEdge1);
-		this.cellLayer.getChildren().add(newEdge);
-		this.edges.add(newEdge);
+				newEdge.getX2().bind(nvs.layoutXProperty().add(nvs.getSquare().getWidth() / 2.0));
+				newEdge.getY2().bind(nvs.layoutYProperty().add(nvs.getSquare().getHeight() / 2.0));
+
+				Edge newEdge1 = new Edge(nvs, v2);
+				newEdge1.getX1().bind(nvs.layoutXProperty().add(nvs.getSquare().getWidth() / 2.0));
+				newEdge1.getY1().bind(nvs.layoutYProperty().add(nvs.getSquare().getHeight() / 2.0));
+				newEdge1.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
+				newEdge1.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+				this.cellLayer.getChildren().add(newEdge);
+				this.edges.add(newEdge);
+				this.cellLayer.getChildren().add(newEdge1);
+				this.edges.add(newEdge1);
+			} else if (v2 instanceof VertexSchema) {
+				if (v1 instanceof VertexSquare) {
+					Edge newEdge = new Edge(v1, v2);
+					newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSquare) v1).getSquare().getWidth() / 2.0));
+					newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSquare) v1).getSquare().getHeight() / 2.0));
+					newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
+					newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
+					this.cellLayer.getChildren().add(newEdge);
+					this.edges.add(newEdge);
+				} else if (v1 instanceof VertexSchema) {
+					Edge newEdge = new Edge(v1, v2);
+					newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSchema) v1).getSquare().getWidth() / 2.0));
+					newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
+					newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
+					newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
+					this.cellLayer.getChildren().add(newEdge);
+					this.edges.add(newEdge);
+				}
+			}
+		} else if (v1 instanceof VertexSchema) {
+			if (v2 instanceof VertexSquare) {
+				Edge newEdge = new Edge(v1, v2);
+				newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSchema) v1).getSquare().getWidth() / 2.0));
+				newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
+				newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
+				newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+				this.cellLayer.getChildren().add(newEdge);
+				this.edges.add(newEdge);
+			} else if (v2 instanceof VertexSchema) {
+				Edge newEdge = new Edge(v1, v2);
+				newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSchema) v1).getSquare().getWidth() / 2.0));
+				newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
+				newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
+				newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
+				this.cellLayer.getChildren().add(newEdge);
+				this.edges.add(newEdge);
+			}
+		}
 	}
 }

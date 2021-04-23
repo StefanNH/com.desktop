@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class VertexSquare extends Vertex {
+public class VertexSchema extends Vertex {
 
 	private double x = 0;
 	private double y = 0;
@@ -29,17 +29,16 @@ public class VertexSquare extends Vertex {
 	private MenuItem menuItem3 = new MenuItem("Close");
 	private Rectangle square = new Rectangle(20, 20);
 
-	public VertexSquare(GraphMP g, String strContent) {
+	public VertexSchema(GraphMP g, String strContent) {
 		super();
 		graph = g;
 
 		lb.setText(strContent);
 		lb.setLayoutX(square.getLayoutX() + 22);
 
-		square.setStroke(Color.GRAY);
-		square.setFill(Color.GRAY);
-		square.setArcHeight(5);
-		square.setArcWidth(5);
+		square.setStroke(Color.YELLOW);
+		square.setFill(Color.YELLOW);
+		square.setRotate(45);
 		square.setOnMousePressed(onMousePressedEventHandler);
 		square.setOnMouseDragged(onMouseDraggedEventHandler);
 		square.setOnMouseReleased(onMouseReleasedEventHandler);
@@ -163,7 +162,5 @@ public class VertexSquare extends Vertex {
 
 	private void removeThisNode() {
 		graph.removeVertex(getCurrent());
-		//graph.cleanEdges(getCurrent());
 	}
-
 }
