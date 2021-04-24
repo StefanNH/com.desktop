@@ -19,7 +19,7 @@ public class GraphMP {
 
 	// undo functionality
 	private Stack<Vertex> removedVertices = new Stack<>();
-	private Stack<Edge> removedEdges = new Stack<>();
+	private ArrayList<Edge> removedEdges = new ArrayList<>();
 
 	ContextMenu contextMenu = new ContextMenu();
 	// create menuitems
@@ -119,13 +119,14 @@ public class GraphMP {
 			vertexLayer.getChildren().add(v);
 			vertices.add(v);
 			if (!removedEdges.isEmpty()) {
-				while (removedEdges.lastElement().getSource().equals(v)
-						|| removedEdges.lastElement().getTarget().equals(v)) {
-					Edge e = removedEdges.pop();
-					edges.add(e);
-					vertexLayer.getChildren().add(e);
-					if (removedEdges.isEmpty()) {
-						break;
+				for (Iterator<Edge> iterator = removedEdges.iterator(); iterator.hasNext();) {
+					Edge value = iterator.next();
+					if ((value.getSource().equals(v) || value.getTarget().equals(v))
+							&& (!removedVertices.contains(value.getTarget())
+									&& !removedVertices.contains(value.getSource()))) {
+						iterator.remove();
+						edges.add(value);
+						vertexLayer.getChildren().add(value);
 					}
 				}
 			}
