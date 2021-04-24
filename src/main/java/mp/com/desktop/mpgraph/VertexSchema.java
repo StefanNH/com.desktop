@@ -71,7 +71,7 @@ public class VertexSchema extends Vertex {
 
 		circle.setFill(Color.BLACK);
 		circle.setCenterX(10);
-		circle.setRadius(3);
+		circle.setRadius(4);
 		circle.setOnDragDetected(e -> {
 			Dragboard db = circle.startDragAndDrop(TransferMode.ANY);
 			ClipboardContent content = new ClipboardContent();
@@ -131,16 +131,17 @@ public class VertexSchema extends Vertex {
 
 		@Override
 		public void handle(MouseEvent event) {
-			Node node;
-			Node srs = (Node) event.getSource();
-			if (srs instanceof Rectangle) {
-				node = srs.getParent();
-				double scale = graph.getScale();
-				toFront();
-				x = node.getBoundsInParent().getMinX() * scale - event.getScreenX();
-				y = node.getBoundsInParent().getMinY() * scale - event.getScreenY();
+			if (event.isPrimaryButtonDown()) {
+				Node node;
+				Node srs = (Node) event.getSource();
+				if (srs instanceof Rectangle) {
+					node = srs.getParent();
+					double scale = graph.getScale();
+					toFront();
+					x = node.getBoundsInParent().getMinX() * scale - event.getScreenX();
+					y = node.getBoundsInParent().getMinY() * scale - event.getScreenY();
+				}
 			}
-
 		}
 	};
 
@@ -148,21 +149,23 @@ public class VertexSchema extends Vertex {
 
 		@Override
 		public void handle(MouseEvent event) {
-			event.consume();
-			Node node;
-			Node srs = (Node) event.getSource();
-			if (srs instanceof Rectangle) {
-				node = srs.getParent();
-				double offsetX = event.getScreenX() + x;
-				double offsetY = event.getScreenY() + y;
+			if (event.isPrimaryButtonDown()) {
+				event.consume();
+				Node node;
+				Node srs = (Node) event.getSource();
+				if (srs instanceof Rectangle) {
+					node = srs.getParent();
+					double offsetX = event.getScreenX() + x;
+					double offsetY = event.getScreenY() + y;
 
-				// adjust the offset in case we are zoomed
-				double scale = graph.getScale();
+					// adjust the offset in case we are zoomed
+					double scale = graph.getScale();
 
-				offsetX /= scale;
-				offsetY /= scale;
+					offsetX /= scale;
+					offsetY /= scale;
 
-				node.relocate(offsetX, offsetY);
+					node.relocate(offsetX, offsetY);
+				}
 			}
 		}
 	};
