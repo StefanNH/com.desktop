@@ -3,6 +3,7 @@ package mp.com.desktop.mpgraph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Stack;
 
 import javafx.scene.Group;
@@ -12,6 +13,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 
 public class GraphMP {
+	private enum LAYOUTS {
+		RANDOM,
+	};
 
 	private ArrayList<Vertex> vertices = new ArrayList<>();
 	private HashMap<String, Vertex> vertexMap = new HashMap<>();
@@ -26,7 +30,7 @@ public class GraphMP {
 	MenuItem menuItem1 = new MenuItem("Add vertex");
 	MenuItem menuItem2 = new MenuItem("Add schema");
 	MenuItem menuItem3 = new MenuItem("Undo");
-	MenuItem menuItem4 = new MenuItem("close");
+	MenuItem menuItem4 = new MenuItem("Redraw");
 
 	private Group canvas;
 
@@ -64,6 +68,7 @@ public class GraphMP {
 			e.consume();
 			undoRemoved();
 		});
+		menuItem4.setOnAction(e -> setLayot(LAYOUTS.RANDOM));
 
 		scrollPane.pannableProperty().set(true);
 		scrollPane.setFitToWidth(true);
@@ -113,7 +118,7 @@ public class GraphMP {
 		removedVertices.add(v);
 	}
 
-	public void undoRemoved() {
+	private void undoRemoved() {
 		if (!removedVertices.isEmpty()) {
 			Vertex v = removedVertices.pop();
 			vertexLayer.getChildren().add(v);
@@ -131,6 +136,23 @@ public class GraphMP {
 				}
 			}
 		}
+	}
+
+	private void setLayot(LAYOUTS layout) {
+		switch (layout) {
+		case RANDOM:
+			Random rand = new Random(System.currentTimeMillis());
+			for (Vertex v : vertices) {
+				double r1 = rand.nextDouble() * 500;
+				double r2 = rand.nextDouble() * 500;
+				v.relocate(r1, r2);
+			}
+			break;
+
+		default:
+			throw new IllegalArgumentException("Unexpected argument ENUM");
+		}
+
 	}
 
 	public void addEdges(Vertex v1, Vertex v2) {
