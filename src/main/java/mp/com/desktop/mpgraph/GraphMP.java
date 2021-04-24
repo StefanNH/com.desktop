@@ -61,6 +61,7 @@ public class GraphMP {
 			addVertex(new VertexSchema(this, ""));
 		});
 		menuItem3.setOnAction(e -> {
+			e.consume();
 			undoRemoved();
 		});
 
@@ -113,17 +114,19 @@ public class GraphMP {
 	}
 
 	public void undoRemoved() {
-		if (removedVertices != null || removedVertices.size() > 0) {
+		if (!removedVertices.isEmpty()) {
 			Vertex v = removedVertices.pop();
 			vertexLayer.getChildren().add(v);
 			vertices.add(v);
-			while (removedEdges.lastElement().getSource().equals(v)
-					|| removedEdges.lastElement().getTarget().equals(v)) {
-				Edge e = removedEdges.pop();
-				edges.add(e);
-				vertexLayer.getChildren().add(e);
-				if (removedEdges.isEmpty()) {
-					break;
+			if (!removedEdges.isEmpty()) {
+				while (removedEdges.lastElement().getSource().equals(v)
+						|| removedEdges.lastElement().getTarget().equals(v)) {
+					Edge e = removedEdges.pop();
+					edges.add(e);
+					vertexLayer.getChildren().add(e);
+					if (removedEdges.isEmpty()) {
+						break;
+					}
 				}
 			}
 		}
