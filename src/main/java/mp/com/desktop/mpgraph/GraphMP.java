@@ -27,14 +27,14 @@ public class GraphMP {
 
 	private ZoomScrollPane scrollPane;
 
-	private Pane cellLayer;
+	private Pane vertexLayer;
 
 	public GraphMP() {
 
 		canvas = new Group();
-		cellLayer = new Pane();
+		vertexLayer = new Pane();
 
-		canvas.getChildren().add(cellLayer);
+		canvas.getChildren().add(vertexLayer);
 		scrollPane = new ZoomScrollPane(canvas);
 		// add menu items to menu
 		contextMenu.getItems().add(menuItem1);
@@ -65,8 +65,8 @@ public class GraphMP {
 		return this.scrollPane;
 	}
 
-	public Pane getCellLayer() {
-		return this.cellLayer;
+	public Pane getVertexLayer() {
+		return this.vertexLayer;
 	}
 
 	public double getScale() {
@@ -74,12 +74,12 @@ public class GraphMP {
 	}
 
 	public void removeEdge(Vertex v) {
-		// enhanced for loop triggers concurrency exception/ normal wasn't checked
+		// enhanced for loop triggers concurrency exception
 		for (Iterator<Edge> iterator = this.edges.iterator(); iterator.hasNext();) {
 			Edge value = iterator.next();
 			if (value.getSource().equals(v) || value.getTarget().equals(v)) {
 				iterator.remove();
-				this.cellLayer.getChildren().remove(value);
+				this.vertexLayer.getChildren().remove(value);
 			}
 		}
 	}
@@ -89,13 +89,13 @@ public class GraphMP {
 	}
 
 	public void addVertex(Vertex v) {
-		this.cellLayer.getChildren().add(v);
+		this.vertexLayer.getChildren().add(v);
 		this.vertices.add(v);
 		this.vertexMap.put(v.getVertexId(), v);
 	}
 
 	public void removeVertex(Vertex v) {
-		this.cellLayer.getChildren().remove(v);
+		this.vertexLayer.getChildren().remove(v);
 		this.vertices.remove(v);
 		this.vertexMap.remove(v.getVertexId());
 		this.removedVertices.add(v);
@@ -104,7 +104,7 @@ public class GraphMP {
 	public void addEdges(Vertex v1, Vertex v2) {
 		if (v1 instanceof VertexSquare) {
 			if (v2 instanceof VertexSquare) {
-				VertexSchema nvs = new VertexSchema(this, "Schema");
+				VertexSchema nvs = new VertexSchema(this, "");
 				Edge newEdge = new Edge(v1, nvs);
 				addVertex(nvs);
 				nvs.relocate(((v1.getBoundsInParent().getCenterX() + v2.getBoundsInParent().getCenterX()) / 2) - 6,
@@ -120,9 +120,9 @@ public class GraphMP {
 				newEdge1.getY1().bind(nvs.layoutYProperty().add(nvs.getSquare().getHeight() / 2.0));
 				newEdge1.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
 				newEdge1.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
-				this.cellLayer.getChildren().add(newEdge);
+				this.vertexLayer.getChildren().add(newEdge);
 				this.edges.add(newEdge);
-				this.cellLayer.getChildren().add(newEdge1);
+				this.vertexLayer.getChildren().add(newEdge1);
 				this.edges.add(newEdge1);
 			} else if (v2 instanceof VertexSchema) {
 				if (v1 instanceof VertexSquare) {
@@ -131,7 +131,7 @@ public class GraphMP {
 					newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSquare) v1).getSquare().getHeight() / 2.0));
 					newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
 					newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
-					this.cellLayer.getChildren().add(newEdge);
+					this.vertexLayer.getChildren().add(newEdge);
 					this.edges.add(newEdge);
 				} else if (v1 instanceof VertexSchema) {
 					Edge newEdge = new Edge(v1, v2);
@@ -139,7 +139,7 @@ public class GraphMP {
 					newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
 					newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
 					newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
-					this.cellLayer.getChildren().add(newEdge);
+					this.vertexLayer.getChildren().add(newEdge);
 					this.edges.add(newEdge);
 				}
 			}
@@ -150,7 +150,7 @@ public class GraphMP {
 				newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
 				newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
 				newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
-				this.cellLayer.getChildren().add(newEdge);
+				this.vertexLayer.getChildren().add(newEdge);
 				this.edges.add(newEdge);
 			} else if (v2 instanceof VertexSchema) {
 				Edge newEdge = new Edge(v1, v2);
@@ -158,7 +158,7 @@ public class GraphMP {
 				newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
 				newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
 				newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
-				this.cellLayer.getChildren().add(newEdge);
+				this.vertexLayer.getChildren().add(newEdge);
 				this.edges.add(newEdge);
 			}
 		}

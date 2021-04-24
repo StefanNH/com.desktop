@@ -57,7 +57,7 @@ public class VertexSquare extends Vertex {
 			e.consume();
 		});
 
-		circle.setFill(Color.DARKRED);
+		circle.setFill(Color.BLACK);
 		circle.setCenterX(10);
 		circle.setRadius(3);
 		circle.setOnDragDetected(e -> {
