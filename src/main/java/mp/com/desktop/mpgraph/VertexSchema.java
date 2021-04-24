@@ -63,8 +63,6 @@ public class VertexSchema extends Vertex {
 		});
 		square.setOnDragDropped(e -> {
 			String str = e.getDragboard().getString();
-			System.out.println(this.getVertexId());
-			System.out.println(str);
 			graph.addEdges(graph.getVertexById(str), getCurrent());
 			e.consume();
 		});
@@ -76,7 +74,6 @@ public class VertexSchema extends Vertex {
 			Dragboard db = circle.startDragAndDrop(TransferMode.ANY);
 			ClipboardContent content = new ClipboardContent();
 			content.putString(this.getVertexId());
-			System.out.println(this.getVertexId());
 			db.setContent(content);
 			e.consume();
 		});

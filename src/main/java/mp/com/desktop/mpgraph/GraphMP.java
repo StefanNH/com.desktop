@@ -150,7 +150,7 @@ public class GraphMP {
 			break;
 
 		default:
-			throw new IllegalArgumentException("Unexpected argument ENUM");
+			throw new IllegalArgumentException("Unexpected argument ENUM argument");
 		}
 
 	}

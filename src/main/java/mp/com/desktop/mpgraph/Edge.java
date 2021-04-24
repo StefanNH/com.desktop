@@ -83,7 +83,7 @@ public class Edge extends Group {
 		arrowhead.getPoints().setAll(x, y, end[0], end[1]);
 		double x1 = end[0] - Math.cos(angle + ARROW_ANGLE) * ARROW_LENGTH;
 		double y1 = end[1] - Math.sin(angle + ARROW_ANGLE) * ARROW_LENGTH;
-		// adding forth point x,y will result in triangle arrowhead
+		// adding forth point x,y results in triangle arrowhead
 		arrowhead.getPoints().addAll(x1, y1, x, y);
 	}
 
