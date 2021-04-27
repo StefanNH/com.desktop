@@ -13,7 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 
 public class GraphMP {
-	private enum LAYOUTS {
+	public static enum LAYOUTS {
 		RANDOM,
 	};
 
@@ -146,7 +146,7 @@ public class GraphMP {
 		}
 	}
 
-	private void setLayot(LAYOUTS layout) {
+	public void setLayot(LAYOUTS layout) {
 		switch (layout) {
 		case RANDOM:
 			Random rand = new Random(System.currentTimeMillis());

@@ -25,6 +25,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import mp.com.desktop.mpgraph.Edge;
 import mp.com.desktop.mpgraph.GraphMP;
+import mp.com.desktop.mpgraph.GraphMP.LAYOUTS;
 import mp.com.desktop.mpgraph.Vertex;
 import mp.com.desktop.mpgraph.VertexSchema;
 import mp.com.desktop.mpgraph.VertexSquare;
@@ -198,6 +199,7 @@ public class PrimaryController {
 					String target = (String) edge.get("target");
 					graph.addEdges(graph.getVertexById(source), graph.getVertexById(target));
 				}
+				graph.setLayot(LAYOUTS.RANDOM);
 				br.close();
 			} else {
 				Alert alert = new Alert(Alert.AlertType.WARNING);
