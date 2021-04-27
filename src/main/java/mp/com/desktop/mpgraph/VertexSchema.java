@@ -46,6 +46,16 @@ public class VertexSchema extends Vertex {
 		} else {
 			lb.setText(strContent);
 		}
+		if (lb.getText().equals(SCHEMA_OPTIONS[0])) {
+			getSquare().setFill(Color.LIMEGREEN);
+			getSquare().setStroke(Color.LIMEGREEN);
+		} else if (lb.getText().equals(SCHEMA_OPTIONS[1])) {
+			getSquare().setFill(Color.RED);
+			getSquare().setStroke(Color.RED);
+		} else {
+			getSquare().setFill(Color.ORANGE);
+			getSquare().setStroke(Color.ORANGE);
+		}
 		lb.setLayoutX(25);
 		lb.setLayoutY(15);
 
@@ -186,5 +196,9 @@ public class VertexSchema extends Vertex {
 	private void removeThisNode() {
 		graph.removeEdge(getCurrent());
 		graph.removeVertex(getCurrent());
+	}
+
+	public String getContent() {
+		return lb.getText();
 	}
 }

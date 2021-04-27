@@ -165,5 +165,7 @@ public class VertexSquare extends Vertex {
 		graph.removeEdge(getCurrent());
 		graph.removeVertex(getCurrent());
 	}
-
+	public String getContent() {
+		return lb.getText();
+	}
 }

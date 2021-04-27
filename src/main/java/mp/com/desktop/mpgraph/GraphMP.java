@@ -101,6 +101,14 @@ public class GraphMP {
 		}
 	}
 
+	public ArrayList<Vertex> getVertices() {
+		return vertices;
+	}
+
+	public ArrayList<Edge> getEdges() {
+		return edges;
+	}
+
 	public Vertex getVertexById(String id) {
 		return vertexMap.get(id);
 	}
@@ -152,6 +160,15 @@ public class GraphMP {
 		default:
 			throw new IllegalArgumentException("Unexpected argument ENUM argument");
 		}
+
+	}
+
+	public void cleanUp() {
+		vertexLayer.getChildren().removeAll(vertices);
+		vertexLayer.getChildren().removeAll(edges);
+		vertices.clear();
+		edges.clear();
+		vertexMap.clear();
 
 	}
 

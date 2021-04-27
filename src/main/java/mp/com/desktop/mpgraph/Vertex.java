@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 
 public class Vertex extends Pane {
 	private String vertexId;
+	private String content;
 	private UUID uuid = UUID.randomUUID();
 
 	public Vertex() {
@@ -18,6 +19,14 @@ public class Vertex extends Pane {
 
 	public void setVertexId(String id) {
 		this.vertexId = id;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }
