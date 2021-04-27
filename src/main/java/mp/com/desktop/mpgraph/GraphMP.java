@@ -169,6 +169,8 @@ public class GraphMP {
 		vertices.clear();
 		edges.clear();
 		vertexMap.clear();
+		removedEdges.clear();
+		removedVertices.clear();
 
 	}
 

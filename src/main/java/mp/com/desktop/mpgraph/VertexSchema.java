@@ -46,6 +46,12 @@ public class VertexSchema extends Vertex {
 		} else {
 			lb.setText(strContent);
 		}
+		lb.setLayoutX(25);
+		lb.setLayoutY(15);
+
+		square.setStroke(Color.ORANGE);
+		square.setFill(Color.ORANGE);
+		square.setRotate(45);
 		if (lb.getText().equals(SCHEMA_OPTIONS[0])) {
 			getSquare().setFill(Color.LIMEGREEN);
 			getSquare().setStroke(Color.LIMEGREEN);
@@ -56,12 +62,6 @@ public class VertexSchema extends Vertex {
 			getSquare().setFill(Color.ORANGE);
 			getSquare().setStroke(Color.ORANGE);
 		}
-		lb.setLayoutX(25);
-		lb.setLayoutY(15);
-
-		square.setStroke(Color.ORANGE);
-		square.setFill(Color.ORANGE);
-		square.setRotate(45);
 		square.setOnMousePressed(onMousePressedEventHandler);
 		square.setOnMouseDragged(onMouseDraggedEventHandler);
 		square.setOnMouseReleased(onMouseReleasedEventHandler);
