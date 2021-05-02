@@ -21,6 +21,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import mp.com.desktop.mpgraph.Edge;
@@ -43,7 +44,18 @@ public class PrimaryController {
 	TextArea txtArea;
 	@FXML
 	BorderPane borderPane;
+	@FXML
+	VBox inputBox;
 	GraphMP graph = new GraphMP();
+
+	@FXML
+	private void toggleInputBox() {
+		if (inputBox.isVisible()) {
+			inputBox.setVisible(false);
+		} else {
+			inputBox.setVisible(true);
+		}
+	}
 
 	@FXML
 	private void addVertex() {
@@ -193,7 +205,7 @@ public class PrimaryController {
 						graph.addVertex(vsch);
 					}
 				}
-				for(Object er : edgeArray) {
+				for (Object er : edgeArray) {
 					JsonObject edge = (JsonObject) er;
 					String source = (String) edge.get("source");
 					String target = (String) edge.get("target");

@@ -18,9 +18,9 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="Close">
+          <Menu mnemonicParsing="false" onAction="#toggleInputBox" text="Input bar">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="togle bar" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="File">
@@ -38,7 +38,7 @@
       </MenuBar>
    </top>
    <left>
-      <VBox prefHeight="374.0" prefWidth="226.0">
+      <VBox fx:id="inputBox" prefHeight="374.0" prefWidth="226.0">
          <children>
             <Separator prefWidth="200.0" />
             <HBox prefHeight="26.0" prefWidth="212.0">
@@ -67,7 +67,6 @@
                   <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </padding>
             </TextArea>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
          </children>
       </VBox>
    </left>
