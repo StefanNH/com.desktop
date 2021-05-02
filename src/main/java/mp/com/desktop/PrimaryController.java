@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
@@ -46,6 +47,8 @@ public class PrimaryController {
 	BorderPane borderPane;
 	@FXML
 	VBox inputBox;
+	@FXML
+	TextField txtInputTitle;
 	GraphMP graph = new GraphMP();
 
 	@FXML
@@ -131,7 +134,11 @@ public class PrimaryController {
 	private void saveTxtFile() throws IOException {
 		FileChooser fch = new FileChooser();
 		fch.getExtensionFilters().addAll(new ExtensionFilter("Text files", "*.txt"));
-		fch.setInitialFileName("file.txt");
+		if (txtInputTitle.getText().isEmpty()) {
+			fch.setInitialFileName("file.txt");
+		} else {
+			fch.setInitialFileName(txtInputTitle.getText());
+		}
 		File f = fch.showSaveDialog(null);
 		if (f != null) {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(f));
@@ -145,7 +152,11 @@ public class PrimaryController {
 	private void exportJSONhandler() throws IOException {
 		FileChooser fch = new FileChooser();
 		fch.getExtensionFilters().addAll(new ExtensionFilter("Export JSON", "*.json"));
-		fch.setInitialFileName("default.json");
+		if (txtInputTitle.getText().isEmpty()) {
+			fch.setInitialFileName("default.json");
+		} else {
+			fch.setInitialFileName(txtInputTitle.getText());
+		}
 		File f = fch.showSaveDialog(null);
 		if (f != null) {
 			JsonArray verticesJSON = new JsonArray();
