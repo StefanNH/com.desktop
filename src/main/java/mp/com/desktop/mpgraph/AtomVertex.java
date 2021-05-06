@@ -3,7 +3,6 @@ package mp.com.desktop.mpgraph;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -16,15 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-public class VertexSchema extends Vertex {
-	private final String[] SCHEMA_OPTIONS = new String[] { "Support", "Conflict", "Argument from Sign",
-			"Argument from an Exceptional", "Argument from Analogy", "Argument from Bias",
-			"Argument from Cause to Effect", "Argument from Correlation to Causes", "Argument from Established Rule",
-			"Argument from Evidence to a Hypothesis", "Argument from Falsification to a Hypothesis",
-			"Argument from Example", "Argument from Commitment", "Circumstantial Argument Against the Person",
-			"Argument from Popular Practice", "Argument from Popularity", "Argument from Position to Know",
-			"Argument from Expert Opinion", "Argument from Precedent", "Argument from Consequences",
-			"Argument from Waste", "Causal Slippery Slope Argument" };
+public class AtomVertex extends Vertex {
 
 	private double x = 0;
 	private double y = 0;
@@ -33,35 +24,22 @@ public class VertexSchema extends Vertex {
 	private ContextMenu contextMenu = new ContextMenu();
 	private Circle circle = new Circle();
 	// create menuitems
-	private MenuItem menuItem1 = new MenuItem("Change schema");
-	private MenuItem menuItem2 = new MenuItem("Delete schema");
+	private MenuItem menuItem1 = new MenuItem("Change content");
+	private MenuItem menuItem2 = new MenuItem("Delete vertex");
 	private MenuItem menuItem3 = new MenuItem("Close");
 	private Rectangle square = new Rectangle(20, 20);
 
-	public VertexSchema(GraphMP g, String strContent) {
+	public AtomVertex(GraphMP g, String strContent) {
 		super();
 		graph = g;
-		if (strContent == null || strContent.equals("")) {
-			lb.setText("Schema");
-		} else {
-			lb.setText(strContent);
-		}
-		lb.setLayoutX(25);
-		lb.setLayoutY(15);
 
-		square.setStroke(Color.ORANGE);
-		square.setFill(Color.ORANGE);
-		square.setRotate(45);
-		if (lb.getText().equals(SCHEMA_OPTIONS[0])) {
-			getSquare().setFill(Color.LIMEGREEN);
-			getSquare().setStroke(Color.LIMEGREEN);
-		} else if (lb.getText().equals(SCHEMA_OPTIONS[1])) {
-			getSquare().setFill(Color.RED);
-			getSquare().setStroke(Color.RED);
-		} else {
-			getSquare().setFill(Color.ORANGE);
-			getSquare().setStroke(Color.ORANGE);
-		}
+		lb.setText(strContent);
+		lb.setLayoutX(square.getLayoutX() + 22);
+
+		square.setStroke(Color.GRAY);
+		square.setFill(Color.GRAY);
+		square.setArcHeight(5);
+		square.setArcWidth(5);
 		square.setOnMousePressed(onMousePressedEventHandler);
 		square.setOnMouseDragged(onMouseDraggedEventHandler);
 		square.setOnMouseReleased(onMouseReleasedEventHandler);
@@ -91,22 +69,12 @@ public class VertexSchema extends Vertex {
 		menuItem1.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				ChoiceDialog<String> db = new ChoiceDialog<>(SCHEMA_OPTIONS[0], SCHEMA_OPTIONS);
-				db.setTitle("Schema");
-				db.setHeaderText("Choose schema");
+				TextInputDialog db = new TextInputDialog();
+				db.setTitle("Edit content");
+				db.setHeaderText("Do you want to edit the content of Node ID: " + getVertexId());
+				db.getEditor().setText(lb.getText());
 				db.showAndWait();
-				String res = db.getResult();
-				if (res.equals(SCHEMA_OPTIONS[0])) {
-					getSquare().setFill(Color.LIMEGREEN);
-					getSquare().setStroke(Color.LIMEGREEN);
-				} else if (res.equals(SCHEMA_OPTIONS[1])) {
-					getSquare().setFill(Color.RED);
-					getSquare().setStroke(Color.RED);
-				} else {
-					getSquare().setFill(Color.ORANGE);
-					getSquare().setStroke(Color.ORANGE);
-				}
-				lb.setText(res);
+				lb.setText(db.getEditor().getText());
 			}
 		});
 		menuItem2.setOnAction(new EventHandler<ActionEvent>() {
@@ -197,7 +165,6 @@ public class VertexSchema extends Vertex {
 		graph.removeEdge(getCurrent());
 		graph.removeVertex(getCurrent());
 	}
-
 	public String getContent() {
 		return lb.getText();
 	}

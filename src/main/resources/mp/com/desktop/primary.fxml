@@ -50,14 +50,14 @@
                </children>
             </HBox>
             <Separator prefHeight="0.0" prefWidth="208.0" />
-            <Label text="Enter Title">
+            <Label prefHeight="19.0" prefWidth="72.0" text="  Enter Title">
                <font>
                   <Font name="System Bold Italic" size="13.0" />
                </font>
             </Label>
             <TextField fx:id="txtInputTitle" />
             <Separator prefWidth="200.0" />
-            <Label text="Enter text">
+            <Label text="  Enter text">
                <font>
                   <Font name="System Bold Italic" size="13.0" />
                </font>

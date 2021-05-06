@@ -59,10 +59,10 @@ public class GraphMP {
 		});
 
 		menuItem1.setOnAction(e -> {
-			addVertex(new VertexSquare(this, ""));
+			addVertex(new AtomVertex(this, ""));
 		});
 		menuItem2.setOnAction(e -> {
-			addVertex(new VertexSchema(this, ""));
+			addVertex(new SchemaVertex(this, ""));
 		});
 		menuItem3.setOnAction(e -> {
 			e.consume();
@@ -175,15 +175,15 @@ public class GraphMP {
 	}
 
 	public void addEdges(Vertex v1, Vertex v2) {
-		if (v1 instanceof VertexSquare) {
-			if (v2 instanceof VertexSquare) {
-				VertexSchema nvs = new VertexSchema(this, "");
+		if (v1 instanceof AtomVertex) {
+			if (v2 instanceof AtomVertex) {
+				SchemaVertex nvs = new SchemaVertex(this, "");
 				Edge newEdge = new Edge(v1, nvs);
 				addVertex(nvs);
 				nvs.relocate(((v1.getBoundsInParent().getCenterX() + v2.getBoundsInParent().getCenterX()) / 2) - 6,
 						((v1.getBoundsInParent().getCenterY() + v2.getBoundsInParent().getCenterY()) / 2) - 6);
-				newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSquare) v1).getSquare().getWidth() / 2.0));
-				newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSquare) v1).getSquare().getHeight() / 2.0));
+				newEdge.getX1().bind(v1.layoutXProperty().add(((AtomVertex) v1).getSquare().getWidth() / 2.0));
+				newEdge.getY1().bind(v1.layoutYProperty().add(((AtomVertex) v1).getSquare().getHeight() / 2.0));
 
 				newEdge.getX2().bind(nvs.layoutXProperty().add(nvs.getSquare().getWidth() / 2.0));
 				newEdge.getY2().bind(nvs.layoutYProperty().add(nvs.getSquare().getHeight() / 2.0));
@@ -191,46 +191,46 @@ public class GraphMP {
 				Edge newEdge1 = new Edge(nvs, v2);
 				newEdge1.getX1().bind(nvs.layoutXProperty().add(nvs.getSquare().getWidth() / 2.0));
 				newEdge1.getY1().bind(nvs.layoutYProperty().add(nvs.getSquare().getHeight() / 2.0));
-				newEdge1.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
-				newEdge1.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+				newEdge1.getX2().bind(v2.layoutXProperty().add(((AtomVertex) v2).getSquare().getWidth() / 2.0));
+				newEdge1.getY2().bind(v2.layoutYProperty().add(((AtomVertex) v2).getSquare().getHeight() / 2.0));
 				vertexLayer.getChildren().add(newEdge);
 				edges.add(newEdge);
 				vertexLayer.getChildren().add(newEdge1);
 				edges.add(newEdge1);
-			} else if (v2 instanceof VertexSchema) {
-				if (v1 instanceof VertexSquare) {
+			} else if (v2 instanceof SchemaVertex) {
+				if (v1 instanceof AtomVertex) {
 					Edge newEdge = new Edge(v1, v2);
-					newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSquare) v1).getSquare().getWidth() / 2.0));
-					newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSquare) v1).getSquare().getHeight() / 2.0));
-					newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
-					newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
+					newEdge.getX1().bind(v1.layoutXProperty().add(((AtomVertex) v1).getSquare().getWidth() / 2.0));
+					newEdge.getY1().bind(v1.layoutYProperty().add(((AtomVertex) v1).getSquare().getHeight() / 2.0));
+					newEdge.getX2().bind(v2.layoutXProperty().add(((SchemaVertex) v2).getSquare().getWidth() / 2.0));
+					newEdge.getY2().bind(v2.layoutYProperty().add(((SchemaVertex) v2).getSquare().getHeight() / 2.0));
 					vertexLayer.getChildren().add(newEdge);
 					edges.add(newEdge);
-				} else if (v1 instanceof VertexSchema) {
+				} else if (v1 instanceof SchemaVertex) {
 					Edge newEdge = new Edge(v1, v2);
-					newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSchema) v1).getSquare().getWidth() / 2.0));
-					newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
-					newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
-					newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
+					newEdge.getX1().bind(v1.layoutXProperty().add(((SchemaVertex) v1).getSquare().getWidth() / 2.0));
+					newEdge.getY1().bind(v1.layoutYProperty().add(((SchemaVertex) v1).getSquare().getHeight() / 2.0));
+					newEdge.getX2().bind(v2.layoutXProperty().add(((SchemaVertex) v2).getSquare().getWidth() / 2.0));
+					newEdge.getY2().bind(v2.layoutYProperty().add(((SchemaVertex) v2).getSquare().getHeight() / 2.0));
 					vertexLayer.getChildren().add(newEdge);
 					edges.add(newEdge);
 				}
 			}
-		} else if (v1 instanceof VertexSchema) {
-			if (v2 instanceof VertexSquare) {
+		} else if (v1 instanceof SchemaVertex) {
+			if (v2 instanceof AtomVertex) {
 				Edge newEdge = new Edge(v1, v2);
-				newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSchema) v1).getSquare().getWidth() / 2.0));
-				newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
-				newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSquare) v2).getSquare().getWidth() / 2.0));
-				newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSquare) v2).getSquare().getHeight() / 2.0));
+				newEdge.getX1().bind(v1.layoutXProperty().add(((SchemaVertex) v1).getSquare().getWidth() / 2.0));
+				newEdge.getY1().bind(v1.layoutYProperty().add(((SchemaVertex) v1).getSquare().getHeight() / 2.0));
+				newEdge.getX2().bind(v2.layoutXProperty().add(((AtomVertex) v2).getSquare().getWidth() / 2.0));
+				newEdge.getY2().bind(v2.layoutYProperty().add(((AtomVertex) v2).getSquare().getHeight() / 2.0));
 				vertexLayer.getChildren().add(newEdge);
 				edges.add(newEdge);
-			} else if (v2 instanceof VertexSchema) {
+			} else if (v2 instanceof SchemaVertex) {
 				Edge newEdge = new Edge(v1, v2);
-				newEdge.getX1().bind(v1.layoutXProperty().add(((VertexSchema) v1).getSquare().getWidth() / 2.0));
-				newEdge.getY1().bind(v1.layoutYProperty().add(((VertexSchema) v1).getSquare().getHeight() / 2.0));
-				newEdge.getX2().bind(v2.layoutXProperty().add(((VertexSchema) v2).getSquare().getWidth() / 2.0));
-				newEdge.getY2().bind(v2.layoutYProperty().add(((VertexSchema) v2).getSquare().getHeight() / 2.0));
+				newEdge.getX1().bind(v1.layoutXProperty().add(((SchemaVertex) v1).getSquare().getWidth() / 2.0));
+				newEdge.getY1().bind(v1.layoutYProperty().add(((SchemaVertex) v1).getSquare().getHeight() / 2.0));
+				newEdge.getX2().bind(v2.layoutXProperty().add(((SchemaVertex) v2).getSquare().getWidth() / 2.0));
+				newEdge.getY2().bind(v2.layoutYProperty().add(((SchemaVertex) v2).getSquare().getHeight() / 2.0));
 				vertexLayer.getChildren().add(newEdge);
 				edges.add(newEdge);
 			}

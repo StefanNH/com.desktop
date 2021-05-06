@@ -29,8 +29,8 @@ import mp.com.desktop.mpgraph.Edge;
 import mp.com.desktop.mpgraph.GraphMP;
 import mp.com.desktop.mpgraph.GraphMP.LAYOUTS;
 import mp.com.desktop.mpgraph.Vertex;
-import mp.com.desktop.mpgraph.VertexSchema;
-import mp.com.desktop.mpgraph.VertexSquare;
+import mp.com.desktop.mpgraph.SchemaVertex;
+import mp.com.desktop.mpgraph.AtomVertex;
 
 public class PrimaryController {
 	@FXML
@@ -62,7 +62,7 @@ public class PrimaryController {
 
 	@FXML
 	private void addVertex() {
-		VertexSquare v = new VertexSquare(graph, txtArea.getSelectedText());
+		AtomVertex v = new AtomVertex(graph, txtArea.getSelectedText());
 		graph.addVertex(v);
 		borderPane.setCenter(graph.getScrollPane());
 	}
@@ -163,7 +163,7 @@ public class PrimaryController {
 			JsonArray edgesJSON = new JsonArray();
 			for (Vertex v : graph.getVertices()) {
 				JsonObject vJSON = new JsonObject();
-				if (v instanceof VertexSchema) {
+				if (v instanceof SchemaVertex) {
 					vJSON.put("type", "schema");
 				} else {
 					vJSON.put("type", "node");
@@ -205,13 +205,13 @@ public class PrimaryController {
 					if (verType.equals("node")) {
 						String id = (String) vertex.get("id");
 						String data = (String) vertex.get("data");
-						VertexSquare vs = new VertexSquare(graph, data);
+						AtomVertex vs = new AtomVertex(graph, data);
 						vs.setVertexId(id);
 						graph.addVertex(vs);
 					} else if (verType.equals("schema")) {
 						String id = (String) vertex.get("id");
 						String data = (String) vertex.get("data");
-						VertexSchema vsch = new VertexSchema(graph, data);
+						SchemaVertex vsch = new SchemaVertex(graph, data);
 						vsch.setVertexId(id);
 						graph.addVertex(vsch);
 					}

@@ -26,42 +26,42 @@ public class Edge extends Group {
 		line.setStroke(Color.DIMGREY);
 		arrowhead.setFill(Color.DIMGREY);
 		arrowhead.setStroke(Color.DIMGREY);
-		if (source instanceof VertexSquare) {
-			if (target instanceof VertexSquare) {
+		if (source instanceof AtomVertex) {
+			if (target instanceof AtomVertex) {
 				this.source = source;
 				this.target = target;
-				this.x1.set(((VertexSquare) source).getSquare().getLayoutX());
-				this.y1.set(((VertexSquare) source).getSquare().getLayoutY());
-				this.x2.set(((VertexSquare) target).getSquare().getLayoutX());
-				this.y2.set(((VertexSquare) target).getSquare().getLayoutY());
+				this.x1.set(((AtomVertex) source).getSquare().getLayoutX());
+				this.y1.set(((AtomVertex) source).getSquare().getLayoutY());
+				this.x2.set(((AtomVertex) target).getSquare().getLayoutX());
+				this.y2.set(((AtomVertex) target).getSquare().getLayoutY());
 				getChildren().addAll(line, arrowhead);
 
-			} else if (target instanceof VertexSchema) {
+			} else if (target instanceof SchemaVertex) {
 				this.source = source;
 				this.target = target;
-				this.x1.set(((VertexSquare) source).getSquare().getLayoutX());
-				this.y1.set(((VertexSquare) source).getSquare().getLayoutY());
-				this.x2.set(((VertexSchema) target).getSquare().getLayoutX());
-				this.y2.set(((VertexSchema) target).getSquare().getLayoutY());
+				this.x1.set(((AtomVertex) source).getSquare().getLayoutX());
+				this.y1.set(((AtomVertex) source).getSquare().getLayoutY());
+				this.x2.set(((SchemaVertex) target).getSquare().getLayoutX());
+				this.y2.set(((SchemaVertex) target).getSquare().getLayoutY());
 				getChildren().addAll(line, arrowhead);
 			}
-		} else if (source instanceof VertexSchema) {
-			if (target instanceof VertexSquare) {
+		} else if (source instanceof SchemaVertex) {
+			if (target instanceof AtomVertex) {
 				this.source = source;
 				this.target = target;
-				this.x1.set(((VertexSchema) source).getSquare().getLayoutX());
-				this.y1.set(((VertexSchema) source).getSquare().getLayoutY());
-				this.x2.set(((VertexSquare) target).getSquare().getLayoutX());
-				this.y2.set(((VertexSquare) target).getSquare().getLayoutY());
+				this.x1.set(((SchemaVertex) source).getSquare().getLayoutX());
+				this.y1.set(((SchemaVertex) source).getSquare().getLayoutY());
+				this.x2.set(((AtomVertex) target).getSquare().getLayoutX());
+				this.y2.set(((AtomVertex) target).getSquare().getLayoutY());
 				getChildren().addAll(line, arrowhead);
 
-			} else if (target instanceof VertexSchema) {
+			} else if (target instanceof SchemaVertex) {
 				this.source = source;
 				this.target = target;
-				this.x1.set(((VertexSchema) source).getSquare().getLayoutX());
-				this.y1.set(((VertexSchema) source).getSquare().getLayoutY());
-				this.x2.set(((VertexSchema) target).getSquare().getLayoutX());
-				this.y2.set(((VertexSchema) target).getSquare().getLayoutY());
+				this.x1.set(((SchemaVertex) source).getSquare().getLayoutX());
+				this.y1.set(((SchemaVertex) source).getSquare().getLayoutY());
+				this.x2.set(((SchemaVertex) target).getSquare().getLayoutX());
+				this.y2.set(((SchemaVertex) target).getSquare().getLayoutY());
 				getChildren().addAll(line, arrowhead);
 			}
 		}
