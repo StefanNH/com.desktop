@@ -64,6 +64,7 @@ public class PrimaryController {
 	private void addVertex() {
 		AtomVertex v = new AtomVertex(graph, txtArea.getSelectedText());
 		graph.addVertex(v);
+		//adds the graph for testing purposes otherwise it has to be compiled to jar and re-added every time
 		borderPane.setCenter(graph.getScrollPane());
 	}
 

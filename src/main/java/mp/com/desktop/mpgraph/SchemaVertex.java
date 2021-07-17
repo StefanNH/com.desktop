@@ -62,9 +62,9 @@ public class SchemaVertex extends Vertex {
 			getSquare().setFill(Color.ORANGE);
 			getSquare().setStroke(Color.ORANGE);
 		}
-		square.setOnMousePressed(onMousePressedEventHandler);
-		square.setOnMouseDragged(onMouseDraggedEventHandler);
-		square.setOnMouseReleased(onMouseReleasedEventHandler);
+		square.setOnMousePressed(e -> onMousePressedHandler(e));
+		square.setOnMouseDragged(e -> onMouseDraggedHandler(e));
+		square.setOnMouseReleased(e -> onMouseReleasedHandler(e));
 		square.setOnDragOver(e -> {
 			if (e.getDragboard().hasString()) {
 				e.acceptTransferModes(TransferMode.ANY);
@@ -134,56 +134,44 @@ public class SchemaVertex extends Vertex {
 		getChildren().add(circle);
 	}
 
-	EventHandler<MouseEvent> onMousePressedEventHandler = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent event) {
-			if (event.isPrimaryButtonDown()) {
-				Node node;
-				Node srs = (Node) event.getSource();
-				if (srs instanceof Rectangle) {
-					node = srs.getParent();
-					double scale = graph.getScale();
-					toFront();
-					x = node.getBoundsInParent().getMinX() * scale - event.getScreenX();
-					y = node.getBoundsInParent().getMinY() * scale - event.getScreenY();
-				}
+	private void onMousePressedHandler(MouseEvent event) {
+		if (event.isPrimaryButtonDown()) {
+			Node node;
+			Node srs = (Node) event.getSource();
+			if (srs instanceof Rectangle) {
+				node = srs.getParent();
+				double scale = graph.getScale();
+				toFront();
+				x = node.getBoundsInParent().getMinX() * scale - event.getScreenX();
+				y = node.getBoundsInParent().getMinY() * scale - event.getScreenY();
 			}
 		}
-	};
+	}
 
-	EventHandler<MouseEvent> onMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+	private void onMouseDraggedHandler(MouseEvent event) {
+		if (event.isPrimaryButtonDown()) {
+			event.consume();
+			Node node;
+			Node srs = (Node) event.getSource();
+			if (srs instanceof Rectangle) {
+				node = srs.getParent();
+				double offsetX = event.getScreenX() + x;
+				double offsetY = event.getScreenY() + y;
 
-		@Override
-		public void handle(MouseEvent event) {
-			if (event.isPrimaryButtonDown()) {
-				event.consume();
-				Node node;
-				Node srs = (Node) event.getSource();
-				if (srs instanceof Rectangle) {
-					node = srs.getParent();
-					double offsetX = event.getScreenX() + x;
-					double offsetY = event.getScreenY() + y;
+				// adjust the offset in case we are zoomed
+				double scale = graph.getScale();
 
-					// adjust the offset in case we are zoomed
-					double scale = graph.getScale();
+				offsetX /= scale;
+				offsetY /= scale;
 
-					offsetX /= scale;
-					offsetY /= scale;
-
-					node.relocate(offsetX, offsetY);
-				}
+				node.relocate(offsetX, offsetY);
 			}
 		}
-	};
+	}
 
-	EventHandler<MouseEvent> onMouseReleasedEventHandler = new EventHandler<MouseEvent>() {
+	private void onMouseReleasedHandler(MouseEvent event) {
 
-		@Override
-		public void handle(MouseEvent event) {
-
-		}
-	};
+	}
 
 	public Rectangle getSquare() {
 		return this.square;
